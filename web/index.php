@@ -31,7 +31,12 @@ $app->post('/review', function() use($app) {
   //code for handling review submission here
   //structure entry and put in database
   //send the user a successful message back
-  return $app['twig']->render('success.twig');
+  $output = "";
+  foreach($_POST as $key => $value) {
+    $output.="$key: $value"."<br />";
+  }
+  echo $output;
+  return $output;
 });
 
 $app->run();
