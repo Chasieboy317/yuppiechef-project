@@ -41,11 +41,11 @@ $app->post('/review', function() use($app) {
   //code for handling review submission here
   $app['db']->insert('reviews', array(
     'id' => strtotime(date("Y-m-d h:i:sa")),
-    'description' => mysql_real_escape_string($_POST['description']),
-    'rating' => mysql_real_escape_string($_POST['rating']),
-    'href' => mysql_real_escape_string($_POST['href']),
-    'name' => mysql_real_escape_string($_POST['name']),
-    'email' => mysql_real_escape_string($_POST['email']),
+    'description' => mysqli_real_escape_string($_POST['description']),
+    'rating' => mysqli_real_escape_string($_POST['rating']),
+    'href' => mysqli_real_escape_string($_POST['href']),
+    'name' => mysqli_real_escape_string($_POST['name']),
+    'email' => mysqli_real_escape_string($_POST['email']),
   ));
   //structure entry and put in database
   //send the user a successful message back
@@ -58,7 +58,11 @@ $app->post('/review', function() use($app) {
 });
 
 $app->get('/view_all', function() use($app) {
-  $reviews = $app['db']->fetchAll('SELECT * FROM reviews');
+  $statement = $app['db']->prepare('SELECT * FROM reviews');
+  $statement->execute();
+  $reviews = $statement->fetchAllAssociative();
+
+  //$reviews = $app['db']->fetchAll('SELECT * FROM reviews');
 
 
   $response = "";
@@ -71,11 +75,6 @@ $app->get('/view_all', function() use($app) {
   }
   //get all reviews and put into list and return
   return "<div class=\"container\">$response</div>";
-});
-
-$app->get('/test_db', function() use($app) {
-  $post = $app['db']->fetchAll('show tables');
-  return $post;
 });
 
 $app->run();
