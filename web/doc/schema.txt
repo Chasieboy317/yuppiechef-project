@@ -1,0 +1,2 @@
+products(id, name);
+reviews(id, description, rating, href, username, email);
