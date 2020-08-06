@@ -58,7 +58,7 @@ $app->post('/review', function() use($app) {
 });
 
 $app->get('/view_all', function() use($app) {
-  $reviews = $app['db']->fetchAllAssociative('SELECT * FROM reviews');
+  $reviews = $app['db']->fetchAll('SELECT * FROM reviews');
 
 
   $response = "";
