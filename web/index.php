@@ -57,12 +57,25 @@ $app->post('/review', function() use($app) {
   return $output;
 });
 
-$app->get('/view_all', function() use($app) {
-  $statement = $app['db']->prepare('SELECT * FROM reviews');
-  $statement->execute();
-  $reviews = $statement->fetchAllAssociative();
+$app->get('/view_review/{id}', function() use($app) {
+  $review = $app['db']->fetchAssoc('SELECT * FROM reviews WHERE id = ?', array("$id"));
+  $output = "";
+  foreach($review as $row_number => $row) {
+    foreach($row as $key => $value) {
+      $output.=$value."\t|";
+    }
+    $output.="<br />";
+  }
 
-  //$reviews = $app['db']->fetchAll('SELECT * FROM reviews');
+  return "<div class=\"container\">$output</div>";
+});
+
+$app->get('/view_all', function() use($app) {
+  /*$statement = $app['db']->prepare('SELECT * FROM reviews');
+  $statement->execute();
+  $reviews = $statement->fetchAllAssociative();*/
+
+  $reviews = $app['db']->fetchAll('SELECT * FROM reviews');
 
 
   $response = "";
