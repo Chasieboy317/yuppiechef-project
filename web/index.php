@@ -44,7 +44,7 @@ $app->post('/review', function() use($app) {
     'description' => mysqli_real_escape_string($_POST['description']),
     'rating' => mysqli_real_escape_string($_POST['rating']),
     'href' => mysqli_real_escape_string($_POST['href']),
-    'name' => mysqli_real_escape_string($_POST['name']),
+    'username' => mysqli_real_escape_string($_POST['name']),
     'email' => mysqli_real_escape_string($_POST['email']),
   ));
   //structure entry and put in database
