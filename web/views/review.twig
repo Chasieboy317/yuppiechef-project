@@ -7,17 +7,15 @@
   <form id="review_form" action="/review" method="post" target="_self">
     <div class="form-group">
       <label>Full Name</label>
-      <input type="name" class="form-control">
+      <input type="name" name="name" class="form-control">
     </div>
     <div class="form-group">
       <label>Email address</label>
-      <input type="email" class="form-control">
+      <input type="email" name="email" class="form-control">
     </div>
     <div class="form-group">
       <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
-          Product
-        </button>
+        <input name="product" class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" value="Product">
         <div class="dropdown-menu">
           <a class="dropdown-item" href="#">Pull product data here</a>
         </div>
@@ -25,7 +23,7 @@
     </div>
     <div class="form-group">
       <label>Rating</label>
-      <ul class="rating" id="review_rating">
+      <ul name="rating" class="rating" id="review_rating" value="1">
         <span id="star_0" class="glyphicon glyphicon-star"></span>
         <span id="star_1" class="glyphicon glyphicon-star-empty"></span>
         <span id="star_2" class="glyphicon glyphicon-star-empty"></span>
@@ -48,6 +46,12 @@
       for (let j=0; j<=i; j++) {
         document.getElementById(`star_${j}`).className = "glyphicon glyphicon-star";
       }
+      if (j!=4) {
+        for (let j=i+1; j<5; j++) {
+          document.getElementById(`star_${j}`).className = "glyphicon glyphicon-star-empty";
+        }
+      }
+      document.getElementById('review_rating').value = i;
     });
   }
 </script>
