@@ -15,6 +15,17 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/views',
 ));
 
+//database Provider
+$app->register(new Silex\Provider\DoctrineServiceProvider(), array(
+  'db.options' => array(
+    'dbname' => getenv('dbname'),
+    'host' => getenv('dbhost'),
+    'user' => getenv('dbuser'),
+    'password' => getenv('dbpass'),
+    'port' => getenv('dbport')
+  ),
+));
+
 // Our web handlers
 
 $app->get('/', function() use($app) {
@@ -37,6 +48,16 @@ $app->post('/review', function() use($app) {
   }
   echo $output;
   return $output;
+});
+
+$app->get('/view_all', function() user($app) {
+  //get all reviews and put into list and return
+  return "<div>"
+});
+
+$app->get('/test_db', function() user($app) {
+  $post = $app['db']->fetchAll('show tables');
+  return $post;
 });
 
 $app->run();
