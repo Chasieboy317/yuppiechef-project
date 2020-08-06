@@ -23,8 +23,15 @@ $app->get('/', function() use($app) {
 });
 
 $app->get('/review', function() use($app) {
-  $app['monolog']->addDebug('logging poes');
+  $app['monolog']->addDebug('logging xd');
   return $app['twig']->render('review.twig');
+});
+
+$app->post('/review', function() use($app) {
+  //code for handling review submission here
+  //structure entry and put in database
+  //send the user a successful message back
+  return $app['twig']->render('success.twig');
 });
 
 $app->run();

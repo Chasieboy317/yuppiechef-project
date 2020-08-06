@@ -4,7 +4,7 @@
 
 <div class="container">
   <h1>We'd like to hear back from you!</h1>
-  <form id="review_form">
+  <form id="review_form" action="/review" method="post" target="_self">
     <div class="form-group">
       <label>Full Name</label>
       <input type="name" class="form-control">
@@ -26,17 +26,18 @@
     <div class="form-group">
       <label>Rating</label>
       <ul class="rating" id="review_rating">
-        <span id="star_0" class="bi bi-star-fill"></span>
-        <span id="star_1" class="bi bi-star"></span>
-        <span id="star_2" class="bi bi-star"></span>
-        <span id="star_3" class="bi bi-star"></span>
-        <span id="star_4" class="bi bi-star"></span>
+        <span id="star_0" class="glyphicon glyphicon-star"></span>
+        <span id="star_1" class="glyphicon glyphicon-star-empty"></span>
+        <span id="star_2" class="glyphicon glyphicon-star-empty"></span>
+        <span id="star_3" class="glyphicon glyphicon-star-empty"></span>
+        <span id="star_4" class="glyphicon glyphicon-star-empty"></span>
       </ul>
     </div>
     <div class="form-group">
       <label>Description</label>
       <textarea class="form-control" id="review_textarea" rows="4"></textarea>
     </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </div>
 
@@ -44,11 +45,11 @@
   for (let i=0; i<5; i++) {
     let star = document.getElementById(`star_${i}`);
     star.addEventListener("click", () => {
-      if (star.className.charAt(star.className.length-1)=='r') {
-        star.className = "bi bi-star-fill";
+      if (star.className.charAt(star.className.length-1)=='y') {
+        star.className = "glyphicon glyphicon-star";
       }
       else {
-        star.className = "bi bi-star"
+        star.className = "glyphicon glyphicon-star-empty"
       }
     });
   }
