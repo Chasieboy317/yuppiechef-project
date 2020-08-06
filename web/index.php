@@ -40,6 +40,14 @@ $app->get('/review', function() use($app) {
 
 $app->post('/review', function() use($app) {
   //code for handling review submission here
+  $app['db']->insert('reviews', array(
+    'id' => strtotime(date("Y-m-d h:i:sa")),
+    'description' => mysql_real_escape_string($_POST['description']),
+    'rating' => mysql_real_escape_string($_POST['rating']),
+    'href' => mysql_real_escape_string($_POST['href']),
+    'name' => mysql_real_escape_string($_POST['name']),
+    'email' => mysql_real_escape_string($_POST['email']),
+  ))
   //structure entry and put in database
   //send the user a successful message back
   $output = "";
@@ -50,9 +58,9 @@ $app->post('/review', function() use($app) {
   return $output;
 });
 
-$app->get('/view_all', function() user($app) {
+$app->get('/view_all', function() use($app) {
   //get all reviews and put into list and return
-  return "<div>"
+  return "<div class=\"container\"></div>";
 });
 
 $app->get('/test_db', function() user($app) {
