@@ -47,7 +47,7 @@ $app->post('/review', function() use($app) {
     'href' => mysql_real_escape_string($_POST['href']),
     'name' => mysql_real_escape_string($_POST['name']),
     'email' => mysql_real_escape_string($_POST['email']),
-  ))
+  ));
   //structure entry and put in database
   //send the user a successful message back
   $output = "";
