@@ -59,8 +59,17 @@ $app->post('/review', function() use($app) {
 });
 
 $app->get('/view_all', function() use($app) {
+  $reviews = $app=>fetchAllAssociative('select * from reviews');
+  $response = "";
+  foreach($reviews as $row_number => $row) {
+    $response.=$row_number."\t|";
+    foreach($row as $key => $value) {
+      $response.=$value."|";
+    }
+    $response.="<br />"
+  }
   //get all reviews and put into list and return
-  return "<div class=\"container\"></div>";
+  return "<div class=\"container\">$response</div>";
 });
 
 $app->get('/test_db', function() user($app) {
