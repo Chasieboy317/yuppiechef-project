@@ -41,11 +41,11 @@ $app->post('/review', function() use($app) {
   //code for handling review submission here
   $app['db']->insert('reviews', array(
     'id' => strtotime(date("Y-m-d h:i:sa")),
-    'description' => mysqli_real_escape_string($_POST['description']),
-    'rating' => mysqli_real_escape_string($_POST['rating']),
-    'href' => mysqli_real_escape_string($_POST['href']),
-    'username' => mysqli_real_escape_string($_POST['name']),
-    'email' => mysqli_real_escape_string($_POST['email']),
+    'description' => ($_POST['description']),
+    'rating' => ($_POST['rating']),
+    'href' => ($_POST['href']),
+    'username' => ($_POST['name']),
+    'email' => ($_POST['email']),
   ));
   //structure entry and put in database
   //send the user a successful message back
