@@ -72,7 +72,7 @@ $app->get('/view_all', function() use($app) {
   return "<div class=\"container\">$response</div>";
 });
 
-$app->get('/test_db', function() user($app) {
+$app->get('/test_db', function() use($app) {
   $post = $app['db']->fetchAll('show tables');
   return $post;
 });
