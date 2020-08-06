@@ -34,7 +34,6 @@ $app->get('/', function() use($app) {
 });
 
 $app->get('/review', function() use($app) {
-  $app['monolog']->addDebug('logging xd');
   return $app['twig']->render('review.twig');
 });
 
@@ -60,6 +59,8 @@ $app->post('/review', function() use($app) {
 
 $app->get('/view_all', function() use($app) {
   $reviews = $app['db']->fetchAllAssociative('select * from reviews');
+
+
   $response = "";
   foreach($reviews as $row_number => $row) {
     $response.=$row_number."\t|";
