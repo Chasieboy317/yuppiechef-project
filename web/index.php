@@ -66,7 +66,7 @@ $app->get('/view_all', function() use($app) {
     foreach($row as $key => $value) {
       $response.=$value."|";
     }
-    $response.="<br />"
+    $response.="<br />";
   }
   //get all reviews and put into list and return
   return "<div class=\"container\">$response</div>";
