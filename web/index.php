@@ -22,4 +22,9 @@ $app->get('/', function() use($app) {
   return $app['twig']->render('index.twig');
 });
 
+$app->get('/review', function() use($app) {
+  $app['monolog']->addDebug('logging poes');
+  return $app['twig']->render('review.twig');
+});
+
 $app->run();
