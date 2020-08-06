@@ -45,15 +45,8 @@
   for (let i=0; i<5; i++) {
     let star = document.getElementById(`star_${i}`);
     star.addEventListener("click", () => {
-      if (star.className.charAt(star.className.length-1)=='y') {
-        for (let j=0; j<=i; j++) {
-          document.getElementById(`star_${j}`).className = "glyphicon glyphicon-star";
-        }
-      }
-      else {
-        for (let j=0; j<=i; j++) {
-          document.getElementById(`star_${j}`).className = "glyphicon glyphicon-star-empty";
-        }
+      for (let j=0; j<=i; j++) {
+        document.getElementById(`star_${j}`).className = "glyphicon glyphicon-star";
       }
     });
   }
