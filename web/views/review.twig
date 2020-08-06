@@ -46,7 +46,7 @@
       for (let j=0; j<=i; j++) {
         document.getElementById(`star_${j}`).className = "glyphicon glyphicon-star";
       }
-      if (j!=4) {
+      if (i<4) {
         for (let j=i+1; j<5; j++) {
           document.getElementById(`star_${j}`).className = "glyphicon glyphicon-star-empty";
         }
