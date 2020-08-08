@@ -53,15 +53,15 @@
       //add products to dropdown menu
       let ddMenu = document.getElementById('ddMenu');
       for (let i=0; i<result.length; i++) {
+        console.log('code ran', i);
         let item = document.createElement('a');
         item.className="dropdown-item";
         item.addEventListener("click", () => {
           document.getElementById("product").value=result[i].id;
           document.getElementById("dropdownMenuButton").value=result[i].name;
         });
-        document.getElementById('ddMenu').appendChild(item);
+        ddMenu.appendChild(item);
       }
-      ddMenu.appendChild(document.createElement('button'))
       /*result.forEach(product => {
         let item = document.createElement("A");
         item.className="dropdown-item";
