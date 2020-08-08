@@ -4,6 +4,18 @@
 
 <div class="container">
   <h1>Reviews</h1>
+  <table id="reviews2" class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Rating</th>
+        <th scope="col">Username</th>
+        <th scope="col">Description</th>
+      <tr>
+    </thead>
+    <tbody id="reviews2">
+    </tbody>
+  </table>
   <ul id="reviews">
   </ul>
 </div>
@@ -18,7 +30,27 @@
   };
 
   function genCard(id, rating=0, name="none", desc="none") {
-    let card = document.createElement("DIV");
+    let idElem = document.createElement("th");
+    idElem.scope="row";
+    idElem.innerText=id;
+
+    let ratingElem = document.createElement("td");
+    ratingElem.innerText=rating;
+
+    let nameElem = document.createElement("td");
+    nameElem.innerText=name;
+
+    let descElem = document.createElement("td");
+    descElem.innerText=desc;
+
+    let row = document.createElement("tr");
+    row.appendChild(idElem);
+    row.appendChild(ratingElem);
+    row.appendChild(nameElem);
+    row.appendChild(descElem);
+
+    return row;
+    /*let card = document.createElement("DIV");
     card.className="card";
 
     let card_body = document.createElement("DIV");
@@ -47,12 +79,12 @@
 
     card.appendChild(card_body);
 
-    return card;
+    return card;*/
   }
 
   function genReviews(reviews=[test_review]) {
     reviews.forEach(review => {
-      document.getElementById("reviews").appendChild(genCard(review.id, review.rating, review.username, review.description));
+      document.getElementById("reviews2").appendChild(genCard(review.id, review.rating, review.username, review.description));
     })
   }
 
