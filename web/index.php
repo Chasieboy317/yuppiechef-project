@@ -83,6 +83,11 @@ $app->get('/view_review/{id}', function($id) use($app) {
   return "<div class=\"container\">$output</div>";
 });
 
+$app->get('/product/{id}', function($id) use($app) {
+  $product = $app['db']->fetchAssoc('SELECT * FROM products WHERE id = ?', array("$id"));
+  return json(json_encode($product), 200);
+});
+
 $app->get('/get_all_reviews', function() use($app) {
   $reviews = $app['db']->fetchAll('SELECT * FROM reviews');
   return $app->json(json_encode($reviews), 200);
