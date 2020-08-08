@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container">
+  <h1>Reviews</h1>
+  <ul id="reviews">
+  </ul>
+</div>
+
+<script>
+  function genCard(id, product="none", rating=0, name="none", desc="none") {
+    let card = document.createElement("DIV");
+    card.className="card";
+
+    let card_body = document.createElement("DIV");
+    card_body.className="card-body";
+
+    let card_title = document.createElement("H5");
+    card_title.className="card-title";
+    card_title.innerText=`${product} - ${rating}`;
+
+    let card_subtitle = document.createElement("H6");
+    card_subtitle.className="card-subtitle";
+    card_subtitle.innerText=name;
+
+    let card_text = document.createElement("P");
+    card_text.className="card-text";
+    card_text.innerText=desc;
+
+    let card_a = document.createElement("A");
+    card_a.className = "btn btn-primary";
+    card_a.href=`/view_review/${id}`;
+
+    card_body.appendChild(card_title);
+    card_body.appendChild(card_subtitle);
+    card_body.appendChild(card_text);
+    card_body.appendChild(card_a);
+
+    card.appendChild(card_body);
+
+    return card;
+  }
+
+  async function getReviews() {
+    fetch('/get_all_reviews').then(async result => {
+      return await result.json()
+    }).then(result => {
+      console.log(result);
+    })
+  }
+
+  const test_review = {
+    id: '1234',
+    product: 'test',
+    name: 'John Test',
+    desc: 'this is a test'
+  }
+
+  function genReviews(reviews=[test_review]) {
+    reviews.forEach(review => {
+      document.getElementById("reviews").appendChild(genCard(review.id, review.product, review.name, review.desc));
+    })
+  }
+</script>
+
+{% endblock %}

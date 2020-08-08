@@ -84,15 +84,17 @@ $app->get('/view_review/{id}', function($id) use($app) {
   return "<div class=\"container\">$output</div>";
 });
 
+$app->get('/get_all_reviews', function() use($app) {
+  $reviews = $app['db']->fetchAll('SELECT * FROM reviews');
+  return $app->json(json_encode($reviews), 200);
+
+})
+
 $app->get('/view_all', function() use($app) {
   /*$statement = $app['db']->prepare('SELECT * FROM reviews');
   $statement->execute();
   $reviews = $statement->fetchAllAssociative();*/
 
-  $reviews = $app['db']->fetchAll('SELECT * FROM reviews');
-
-
-  return $app->json(json_encode($reviews), 200);
   /*foreach($reviews as $row_number => $row) {
     $response.=$row_number."\t|";
     foreach($row as $key => $value) {
@@ -102,6 +104,7 @@ $app->get('/view_all', function() use($app) {
   }*/
   //get all reviews and put into list and return
   //return "<div class=\"container\">$response</div>";
+  return $app['twig']->render('view_all.twig');
 });
 
 $app->run();
