@@ -12,13 +12,12 @@
 
   const test_review = {
     id: '1234',
-    product: 'test',
     rating: 2,
-    name: 'John Test',
-    desc: 'this is a test'
+    username: 'John Test',
+    description: 'this is a test'
   };
 
-  function genCard(id, product="none", rating=0, name="none", desc="none") {
+  function genCard(id, rating=0, name="none", desc="none") {
     let card = document.createElement("DIV");
     card.className="card";
 
@@ -27,7 +26,7 @@
 
     let card_title = document.createElement("H5");
     card_title.className="card-title";
-    card_title.innerText=`${product} - ${rating}`;
+    card_title.innerText=`${id} - ${rating}`;
 
     let card_subtitle = document.createElement("H6");
     card_subtitle.className="card-subtitle";
@@ -53,7 +52,7 @@
 
   function genReviews(reviews=[test_review]) {
     reviews.forEach(review => {
-      document.getElementById("reviews").appendChild(genCard(review.id, review.product, review.rating, review.name, review.desc));
+      document.getElementById("reviews").appendChild(genCard(review.id, review.rating, review.username, review.description));
     })
   }
 
