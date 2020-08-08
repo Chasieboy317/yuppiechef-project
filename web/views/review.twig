@@ -17,9 +17,8 @@
       <div class="dropdown">
         <input name="dropdownButton" class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" value="Select a product">
         <input name="product" type="hidden" value="none" id="product">
-        <div class="dropdown-menu" id="ddMenu">
-          <a class="dropdown-item" href="#">Pull product data here</a>
-        </div>
+        <ul class="dropdown-menu" id="ddMenu">
+        </ul>
       </div>
     </div>
     <div class="form-group">
@@ -54,9 +53,8 @@
       let ddMenu = document.getElementById('ddMenu');
       for (let i=0; i<result.length; i++) {
         console.log('code ran', i);
-        let item = document.createElement('a');
+        let item = document.createElement('li');
         item.className="dropdown-item";
-        item.href="#";
         item.innerText=result[i].name;
         item.addEventListener("click", () => {
           document.getElementById("product").value=result[i].id;
