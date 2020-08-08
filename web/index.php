@@ -67,7 +67,6 @@ $app->post('/review', function() use($app) {
   foreach($_POST as $key => $value) {
     $output.="$key: $value"."<br />";
   }
-  echo $output;
   return $output;
 });
 

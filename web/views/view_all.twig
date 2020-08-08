@@ -13,6 +13,7 @@
   const test_review = {
     id: '1234',
     product: 'test',
+    rating: 2,
     name: 'John Test',
     desc: 'this is a test'
   };
@@ -52,7 +53,7 @@
 
   function genReviews(reviews=[test_review]) {
     reviews.forEach(review => {
-      document.getElementById("reviews").appendChild(genCard(review.id, review.product, review.name, review.desc));
+      document.getElementById("reviews").appendChild(genCard(review.id, review.product, review.rating, review.name, review.desc));
     })
   }
 
@@ -62,7 +63,7 @@
     }).then(result => {
       result = JSON.parse(result);
       console.log(result);
-      genReviews();
+      genReviews(result);
     });
   }
 
