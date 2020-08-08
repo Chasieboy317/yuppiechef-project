@@ -9,6 +9,14 @@
 </div>
 
 <script>
+
+  const test_review = {
+    id: '1234',
+    product: 'test',
+    name: 'John Test',
+    desc: 'this is a test'
+  };
+
   function genCard(id, product="none", rating=0, name="none", desc="none") {
     let card = document.createElement("DIV");
     card.className="card";
@@ -42,24 +50,18 @@
     return card;
   }
 
+  function genReviews(reviews=[test_review]) {
+    reviews.forEach(review => {
+      document.getElementById("reviews").appendChild(genCard(review.id, review.product, review.name, review.desc));
+    })
+  }
+
   async function getReviews() {
     fetch('/get_all_reviews').then(async result => {
       return await result.json()
     }).then(result => {
       console.log(result);
-    })
-  }
-
-  const test_review = {
-    id: '1234',
-    product: 'test',
-    name: 'John Test',
-    desc: 'this is a test'
-  }
-
-  function genReviews(reviews=[test_review]) {
-    reviews.forEach(review => {
-      document.getElementById("reviews").appendChild(genCard(review.id, review.product, review.name, review.desc));
+      genReviews();
     })
   }
 
