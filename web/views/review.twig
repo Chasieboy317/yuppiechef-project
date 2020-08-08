@@ -53,7 +53,7 @@
       //add products to dropdown menu
       let ddMenu = document.getElementById('ddMenu');
       for (let i=0; i<result.length; i++) {
-        let item = document.createElement("A");
+        let item = document.createElement('a');
         item.className="dropdown-item";
         item.addEventListener("click", () => {
           document.getElementById("product").value=result[i].id;
@@ -61,6 +61,7 @@
         });
         document.getElementById('ddMenu').appendChild(item);
       }
+      ddMenu.appendChild(document.createElement('button'))
       /*result.forEach(product => {
         let item = document.createElement("A");
         item.className="dropdown-item";
