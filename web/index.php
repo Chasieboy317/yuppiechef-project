@@ -88,7 +88,7 @@ $app->get('/get_all_reviews', function() use($app) {
   $reviews = $app['db']->fetchAll('SELECT * FROM reviews');
   return $app->json(json_encode($reviews), 200);
 
-})
+});
 
 $app->get('/view_all', function() use($app) {
   /*$statement = $app['db']->prepare('SELECT * FROM reviews');
