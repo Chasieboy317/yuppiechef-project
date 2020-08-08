@@ -47,10 +47,20 @@
       return await result.json();
     }).then(result => {
       console.log(result);
+      console.log(typeof result);
 
       //add products to dropdown menu
       let ddMenu = document.getElementById('ddMenu');
-      result.forEach(product => {
+      for (let i=0; i<result.length; i++) {
+        let item = document.createElement("A");
+        item.className="dropdown-item";
+        item.addEventListener("click", () => {
+          document.getElementById("product").value=result[i].id;
+          document.getElementById("dropdownMenuButton").value=result[i].name;
+        });
+        ddMenu.appendChild(item);
+      }
+      /*result.forEach(product => {
         let item = document.createElement("A");
         item.className="dropdown-item";
         item.addEventListener("click", () => {
@@ -58,8 +68,8 @@
           document.getElementById("dropdownMenuButton").value=product.name;
         });
         ddMenu.appendChild(item);
-      });
-    })
+      });*/
+    });
   }
 
   function ratingLogic() {
