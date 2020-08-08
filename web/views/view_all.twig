@@ -4,20 +4,19 @@
 
 <div class="container">
   <h1>Reviews</h1>
-  <table id="reviews2" class="table">
+  <table class="table">
     <thead>
       <tr>
         <th scope="col">ID</th>
         <th scope="col">Rating</th>
         <th scope="col">Username</th>
+        <th scope="col">Submitted at</th>
         <th scope="col">Description</th>
       <tr>
     </thead>
-    <tbody id="reviews2">
+    <tbody id="reviews">
     </tbody>
   </table>
-  <ul id="reviews">
-  </ul>
 </div>
 
 <script>
@@ -26,65 +25,52 @@
     id: '1234',
     rating: 2,
     username: 'John Test',
+    timestamp: new Date().getTime().toLocaleString(),
     description: 'this is a test'
   };
 
-  function genCard(id, rating=0, name="none", desc="none") {
+  function genCard(review = {
+    id: "none",
+    rating: 0,
+    username: "none",
+    timestamp: "none",
+    description: "none"
+  })
+  {
     let idElem = document.createElement("th");
     idElem.scope="row";
-    idElem.innerText=id;
+    idElem.innerText=review.id;
 
     let ratingElem = document.createElement("td");
-    ratingElem.innerText=rating;
+    ratingElem.innerText=review.rating;
 
     let nameElem = document.createElement("td");
-    nameElem.innerText=name;
+    nameElem.innerText=review.username;
+
+    let timestampElem = document.createElement("td");
+    timestampElem.innerText=review.timestamp;
 
     let descElem = document.createElement("td");
-    descElem.innerText=desc;
+    descElem.innerText=review.description;
+
+    editButton = document.createElement("a");
+    editButton.className="btn btn-primary btn-sm";
+    editButton.innerText="Edit review";
+    editButton.href=`/view_review/${id}`;
 
     let row = document.createElement("tr");
     row.appendChild(idElem);
     row.appendChild(ratingElem);
     row.appendChild(nameElem);
     row.appendChild(descElem);
+    row.appendChild(editButton);
 
     return row;
-    /*let card = document.createElement("DIV");
-    card.className="card";
-
-    let card_body = document.createElement("DIV");
-    card_body.className="card-body";
-
-    let card_title = document.createElement("H5");
-    card_title.className="card-title";
-    card_title.innerText=`${id} - ${rating}`;
-
-    let card_subtitle = document.createElement("H6");
-    card_subtitle.className="card-subtitle";
-    card_subtitle.innerText=name;
-
-    let card_text = document.createElement("P");
-    card_text.className="card-text";
-    card_text.innerText=desc;
-
-    let card_a = document.createElement("A");
-    card_a.className = "btn btn-primary";
-    card_a.href=`/view_review/${id}`;
-
-    card_body.appendChild(card_title);
-    card_body.appendChild(card_subtitle);
-    card_body.appendChild(card_text);
-    card_body.appendChild(card_a);
-
-    card.appendChild(card_body);
-
-    return card;*/
   }
 
   function genReviews(reviews=[test_review]) {
     reviews.forEach(review => {
-      document.getElementById("reviews2").appendChild(genCard(review.id, review.rating, review.username, review.description));
+      document.getElementById("reviews").appendChild(genCard(review));
     })
   }
 

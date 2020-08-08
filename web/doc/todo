@@ -1,12 +1,18 @@
 navbar:
 change highlighted link on active page
 
+homepage /:
+should display some disclaimer text
+indicate navbar above
+what each page does
+
 submit review page:
 popup response displaying success
 popup response displaying failure
 
 list all reviews page:
 list all reviews should be in a table
+add time submitted as a column
 
 review page:
 displaying review data on single Reviews
@@ -18,8 +24,14 @@ number of reviews per product
 total review activity per day
 time of day reviews are submitted
 
+user input:
+validate user input server side
+reject empty reviews
+error handling if reviews have the same timestamp
+
 mysql database:
 indexing
+review ids should be more unique - maybe change id to timestamp and md5 hash of date and random number
 
 mysql api:
 selecting only necessary fields
