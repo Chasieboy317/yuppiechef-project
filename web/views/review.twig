@@ -15,8 +15,9 @@
     </div>
     <div class="form-group">
       <div class="dropdown">
-        <input name="product" class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" value="Product">
-        <div class="dropdown-menu">
+        <input name="dropdownButton" class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" value="Product">
+        <input name="product" type="hidden" value="none" id="product">
+        <div class="dropdown-menu" id="ddMenu">
           <a class="dropdown-item" href="#">Pull product data here</a>
         </div>
       </div>
@@ -41,20 +42,44 @@
 </div>
 
 <script>
-  for (let i=0; i<5; i++) {
-    let star = document.getElementById(`star_${i}`);
-    star.addEventListener("click", () => {
-      for (let j=0; j<=i; j++) {
-        document.getElementById(`star_${j}`).className = "glyphicon glyphicon-star";
-      }
-      if (i<4) {
-        for (let j=i+1; j<5; j++) {
-          document.getElementById(`star_${j}`).className = "glyphicon glyphicon-star-empty";
-        }
-      }
-      document.getElementById('review_rating').value = i;
-    });
+  function getProducts() {
+    fetch('/products').then(result => {
+      return await result.json();
+    }).then(result => {
+      console.log(result);
+
+      //add products to dropdown menu
+      let ddMenu = document.getElementById('ddMenu');
+      result.forEach(product => {
+        let item = document.createElement("A");
+        item.className="dropdown-item";
+        item.addEventListener("click", () => {
+          document.getElementById("product").value=product.id;
+        });
+        ddMenu.appendChild(item);
+      });
+    })
   }
+
+  function ratingLogic() {
+    for (let i=0; i<5; i++) {
+      let star = document.getElementById(`star_${i}`);
+      star.addEventListener("click", () => {
+        for (let j=0; j<=i; j++) {
+          document.getElementById(`star_${j}`).className = "glyphicon glyphicon-star";
+        }
+        if (i<4) {
+          for (let j=i+1; j<5; j++) {
+            document.getElementById(`star_${j}`).className = "glyphicon glyphicon-star-empty";
+          }
+        }
+        document.getElementById('review_rating').value = i;
+      });
+    }
+  }
+
+  ratingLogic();
+  getProducts();
 </script>
 
 {% endblock %}

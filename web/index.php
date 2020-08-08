@@ -33,6 +33,20 @@ $app->get('/', function() use($app) {
   return $app['twig']->render('index.twig');
 });
 
+$app->get('/products', function() use($app) {
+  $products = array(
+    array(
+      'id' => '1234',
+      'name' => 'spatula'
+    ),
+    array(
+      'id' => '1599',
+      'name' => 'french press'
+    ),
+  );
+  return $app->json(json_encode($products), 200);
+});
+
 $app->get('/review', function() use($app) {
   return $app['twig']->render('review.twig');
 });
@@ -57,7 +71,7 @@ $app->post('/review', function() use($app) {
   return $output;
 });
 
-$app->get('/view_review/{id}', function() use($app) {
+$app->get('/view_review/{id}', function($id) use($app) {
   $review = $app['db']->fetchAssoc('SELECT * FROM reviews WHERE id = ?', array("$id"));
   $output = "";
   foreach($review as $row_number => $row) {
