@@ -57,12 +57,11 @@
   }
 
   async function getReviews() {
-    fetch('/get_all_reviews').then(async result => {
-      return await result.json()
-    }).then(result => {
+    fetch('/get_all_reviews').then(result => {
+      result = JSON.parse(result);
       console.log(result);
       genReviews();
-    })
+    });
   }
 
   getReviews();
