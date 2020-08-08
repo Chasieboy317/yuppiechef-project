@@ -15,7 +15,7 @@
     </div>
     <div class="form-group">
       <div class="dropdown">
-        <input name="dropdownButton" class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" value="Product">
+        <input name="dropdownButton" class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" value="Select a product">
         <input name="product" type="hidden" value="none" id="product">
         <div class="dropdown-menu" id="ddMenu">
           <a class="dropdown-item" href="#">Pull product data here</a>
@@ -42,7 +42,7 @@
 </div>
 
 <script>
-  function getProducts() {
+  async function getProducts() {
     fetch('/products').then(result => {
       return await result.json();
     }).then(result => {
@@ -55,6 +55,7 @@
         item.className="dropdown-item";
         item.addEventListener("click", () => {
           document.getElementById("product").value=product.id;
+          document.getElementById("dropdownMenuButton").value=product.name;
         });
         ddMenu.appendChild(item);
       });

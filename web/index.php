@@ -92,16 +92,16 @@ $app->get('/view_all', function() use($app) {
   $reviews = $app['db']->fetchAll('SELECT * FROM reviews');
 
 
-  $response = "";
-  foreach($reviews as $row_number => $row) {
+  return $app->json(json_encode($reviews), 200);
+  /*foreach($reviews as $row_number => $row) {
     $response.=$row_number."\t|";
     foreach($row as $key => $value) {
       $response.=$value."|";
     }
     $response.="<br />";
-  }
+  }*/
   //get all reviews and put into list and return
-  return "<div class=\"container\">$response</div>";
+  //return "<div class=\"container\">$response</div>";
 });
 
 $app->run();
