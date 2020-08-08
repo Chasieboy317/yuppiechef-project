@@ -43,8 +43,9 @@
 
 <script>
   async function getProducts() {
-    fetch('/products').then(result => {
-      console.log(result);
+    fetch('/products').then(async result => {
+      return await result.json();
+    }).then(result => {
       result = JSON.parse(result);
       console.log(result);
       console.log(typeof result);
