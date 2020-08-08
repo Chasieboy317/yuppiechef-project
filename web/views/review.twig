@@ -59,7 +59,7 @@
           document.getElementById("product").value=result[i].id;
           document.getElementById("dropdownMenuButton").value=result[i].name;
         });
-        ddMenu.appendChild(item);
+        document.getElementById('ddMenu').appendChild(item);
       }
       /*result.forEach(product => {
         let item = document.createElement("A");
