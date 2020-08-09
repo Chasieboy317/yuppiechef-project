@@ -30,6 +30,7 @@ mysql database:
 indexing
 review ids should be more unique - maybe change id to timestamp and md5 hash of date and random number
 add timestamp column in reviews table
+add link to product table
 
 mysql api:
 add timestamp value and hash id when inserting review

@@ -3,4 +3,82 @@
 {% block content %}
 
 <div>{{app.request.get('id')}}</div>
+<div class="container">
+  <h3 id="product_name"></h4>
+  <h4 id="product_id"></h4>
+  <a id="product_link" href=""></a>
+  <form method="post" action="/edit_review" target="_self">
+    <div class="form-group">
+      <label>Review ID</label>
+      <input id="review_id" type="text" disabled>
+    </div>
+    <div class="form-group">
+      <label>Username</label>
+      <input id="review_username" type="text" disabled>
+    </div>
+    <div class="form-group">
+      <label>Rating</label>
+      <input id="review_rating" type="text">
+    </div>
+    <div class="form-group">
+      <label>Submitted at</label>
+      <input id="review_timestamp" type="text" disabled>
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <input id="review_description" type="text">
+    </div>
+  <form>
+
+</div>
+
+<script>
+  function getReview() {
+    fetch(`/get_review/${ {{app.request.get('id')}} }`).then(async result => {
+      return await result.json();
+    }).then(result => {
+      result = JSON.parse(result);
+      formatReview(result);
+    })
+  }
+
+  function getProduct(productId) {
+    fetch(`/product/${productId}`).then(async result => {
+      return await result.json();
+    }).then(result => {
+      result = JSON.parse(result);
+      formatProduct(result);
+    })
+  }
+
+  function formatReview(review = {
+    id: "id",
+    rating: 0,
+    username: "name",
+    timestamp: "date",
+    description: "description"
+  }) {
+    document.getElementById("review_id").value=review.id;
+    document.getElementById("review_rating").value=review.rating;
+    document.getElementById("review_username").value=review.username;
+    document.getElementById("review_timestamp").value=review.timestamp;
+    document.getElementById("review_description").value=review.description;
+
+  }
+
+  function formatProduct(product={
+    name: "product name",
+    id: "product_id",
+    link: "product link",
+  }) {
+    document.getElementById("product_id").innerText=product.id;
+    document.getElementById("product_name").innerText=product.name;
+    document.getElementById("product_link").innerText=product.link;
+  }
+
+  getReview();
+  getProduct();
+
+
+</script>
 {% endblock %}

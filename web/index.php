@@ -70,21 +70,28 @@ $app->post('/review', function() use($app) {
   return $output;
 });
 
-$app->get('/view_review/{id}', function($id) use($app) {
-  $review = $app['db']->fetchAssoc('SELECT * FROM reviews WHERE id = ?', array("$id"));
-  $output = "";
-  foreach($review as $row_number => $row) {
-    foreach($row as $key => $value) {
-      $output.=$value."\t|";
-    }
-    $output.="<br />";
-  }
 
-  return "<div class=\"container\">$output</div>";
+$app->get('/view_review/{id}', function($id) use($app) {
+  return $app['twig']->render('view_review.twig');
+});
+
+$app->get('/get_review/{id}', function($id) use($app) {
+  $review = $app['db']->fetchAssoc('SELECT * FROM reviews WHERE id = ?', array("$id"));
+  return json(json_encode($review), 200);
+});
+
+$app->post('/edit_review', function() use($app) {
+  $app['db']->update('reviews', array('description' => $_POST['description']));
+  return new Response('Successfully updated review', 200);
 });
 
 $app->get('/product/{id}', function($id) use($app) {
-  $product = $app['db']->fetchAssoc('SELECT * FROM products WHERE id = ?', array("$id"));
+  //$product = $app['db']->fetchAssoc('SELECT * FROM products WHERE id = ?', array("$id"));
+  $product = array(
+    'id' => '1234',
+    'name' => 'french press',
+    'link' => '/products/'.$id
+  );
   return json(json_encode($product), 200);
 });
 
