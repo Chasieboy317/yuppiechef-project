@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div>{{app.request.get('id')}}</div>
+<div>{{global.request.get('id')}}</div>
 <div class="container">
   <h3 id="product_name"></h4>
   <h4 id="product_id"></h4>
@@ -34,7 +34,7 @@
 
 <script>
   function getReview() {
-    fetch(`/get_review/${ {{app.request.get('id')}} }`).then(async result => {
+    fetch(`/get_review/${ {{global.request.get('id')}} }`).then(async result => {
       return await result.json();
     }).then(result => {
       result = JSON.parse(result);
