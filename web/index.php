@@ -66,11 +66,7 @@ $app->post('/review', function() use($app) {
   ));
   //structure entry and put in database
   //send the user a successful message back
-  $output = "";
-  foreach($_POST as $key => $value) {
-    $output.="$key: $value"."<br />";
-  }
-  return $output;
+  return "<script>alert(\"Thank you for your feedback!\")</script>"
 });
 
 
