@@ -66,7 +66,7 @@ $app->post('/review', function() use($app) {
   ));
   //structure entry and put in database
   //send the user a successful message back
-  return "<script>alert(\"Thank you for your feedback!\")</script>"
+  return "<script>alert(\"Thank you for your feedback!\")</script>";
 });
 
 
