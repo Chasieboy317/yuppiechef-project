@@ -1,7 +1,4 @@
-navbar:
-change highlighted link on active page
-
-homepage /:
+***homepage /:
 should display some disclaimer text
 indicate navbar above
 what each page does
@@ -10,25 +7,25 @@ submit review page:
 popup response displaying success
 popup response displaying failure
 
-reports page:
+******************reports page:
 average review rating per product
 number of reviews per product
 total review activity per day
 time of day reviews are submitted
 
-user input:
+***user input:
 validate user input server side
 reject empty reviews
 
-mysql database:
+*********mysql database:
 indexing
 add timestamp column in reviews table
 add link column in product table
 
-mysql api:
+*********mysql api:
 selecting only necessary fields
 
-security:
+*********security:
 sql injection prevention
 
 ui:
@@ -37,7 +34,6 @@ loading spinners
 feedback:
 
 http:
-setting status codes
 error handling for invalid routes
 error handling for timeout requests
 error handling for api calls

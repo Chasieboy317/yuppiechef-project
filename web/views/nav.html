@@ -2,16 +2,16 @@
   <div class="container">
     <ul id="navlinks" class="nav navbar-nav">
       <li>
-        <a href="/"><span class="glyphicon glyphicon-upload"></span>Home</a>
+        <a id="/" href="/"><span class="glyphicon glyphicon-upload"></span>Home</a>
       </li>
       <li>
-        <a href="/review"><span class="glyphicon glyphicon-upload"></span>Submit a review</a>
+        <a id="review" href="/review"><span class="glyphicon glyphicon-upload"></span>Submit a review</a>
       </li>
       <li>
-        <a href="/view_all"><span class="glyphicon glyphicon-list-alt"></span>List all reviews</a>
+        <a id="view_all" href="/view_all"><span class="glyphicon glyphicon-list-alt"></span>List all reviews</a>
       </li>
       <li>
-        <a href="/reports"><span class="glyphicon glyphicon-book"></span>Reports</a>
+        <a id="reports" href="/reports"><span class="glyphicon glyphicon-book"></span>Reports</a>
       </li>
     </ul>
   </div>
@@ -19,19 +19,7 @@
 
 <script>
   function makeActive() {
-    let navlinks = document.getElementById("navlinks");
-    for (let i=0; i<navlinks.children.length; i++) {
-      navlinks.children[i].addEventListener("click", () => {
-        if (navlinks.children[i].className!="active") {
-          for (let j=0; j<navlinks.children.length; j++) {
-            if (i!=j) {
-              navlinks.children[j].className="";
-            }
-          }
-          navlinks.children[i].className="active";
-        }
-      });
-    }
+    document.getElementById(window.location.href.split('/').pop()).className="active";
   }
 
   makeActive();
