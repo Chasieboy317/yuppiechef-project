@@ -19,8 +19,6 @@ reject empty reviews
 
 *********mysql database:
 indexing
-add timestamp column in reviews table
-add link column in product table
 
 *********mysql api:
 selecting only necessary fields
@@ -38,3 +36,8 @@ error handling for invalid routes
 error handling for timeout requests
 error handling for api calls
 rate limiting
+
+FINAL:
+UNIT TESTING OF ALL FUNCTIONALITY
+ADD PRODUCT DATA IN DATABASE
+LEAVE A VIEW TEST REVIEWS TO SHOW BASIC FUNCTIONALITY
