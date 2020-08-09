@@ -83,7 +83,7 @@ $app->get('/get_review/{id}', function($id) use($app) {
 
 $app->post('/edit_review', function() use($app) {
   $app['db']->update('reviews', array('description' => $_POST['description']), array('id' => $_POST['id']));
-  return new Response('Successfully updated review', 200);
+  return 'Successfully updated review';
 });
 
 $app->get('/product/{id}', function($id) use($app) {
@@ -117,6 +117,10 @@ $app->get('/view_all', function() use($app) {
   //get all reviews and put into list and return
   //return "<div class=\"container\">$response</div>";
   return $app['twig']->render('view_all.twig');
+});
+
+$app->error(function(\Exception $e) {
+  return ("Sorry, but something went terrible wrong<br />$e");
 });
 
 $app->run();
