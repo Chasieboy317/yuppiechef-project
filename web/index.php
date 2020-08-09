@@ -34,16 +34,7 @@ $app->get('/', function() use($app) {
 });
 
 $app->get('/products', function() use($app) {
-  $products = array(
-    array(
-      'id' => '1234',
-      'name' => 'spatula'
-    ),
-    array(
-      'id' => '1599',
-      'name' => 'french press'
-    ),
-  );
+  $products=$app['db']->fetchAll('SELECT * FROM products');
   return $app->json(json_encode($products), 200);
 });
 
@@ -56,13 +47,13 @@ $app->post('/review', function() use($app) {
   //code for handling review submission here
   $app['db']->insert('reviews', array(
     'id' => md5(strtotime(date("Y-m-d h:i:sa")).rand(0, 999)),
-    'product_id' => ($_POST['product']),
+    'product_id' => $app->escape($_POST['product']),
     'timestamp' => strtotime(date("Y-m-d h:i:sa")),
-    'description' => ($_POST['description']),
-    'rating' => ($_POST['rating']),
-    'href' => ($product['href']),
-    'username' => ($_POST['name']),
-    'email' => ($_POST['email']),
+    'description' => $app->escape($_POST['description']),
+    'rating' => $app->escape($_POST['rating']),
+    'href' => $app->escape($product['href']),
+    'username' => $app->escape($_POST['name']),
+    'email' => $app->escape($_POST['email']),
   ));
   //structure entry and put in database
   //send the user a successful message back
@@ -80,8 +71,8 @@ $app->get('/get_review/{id}', function($id) use($app) {
 });
 
 $app->post('/edit_review', function() use($app) {
-  $app['db']->update('reviews', array('description' => $_POST['description']), array('id' => $_POST['id']));
-  return 'Successfully updated review';
+  $app['db']->update('reviews', array('description' => $app->escape($_POST['description'])), array('id' => $_POST['id']));
+  return "<script>alert(\"Review successfully updated\")";
 });
 
 $app->get('/product/{id}', function($id) use($app) {
@@ -92,7 +83,6 @@ $app->get('/product/{id}', function($id) use($app) {
 $app->get('/get_all_reviews', function() use($app) {
   $reviews = $app['db']->fetchAll('SELECT * FROM reviews');
   return $app->json(json_encode($reviews), 200);
-
 });
 
 $app->get('/view_all', function() use($app) {
