@@ -118,12 +118,12 @@ $app->get('/report/get_data', function() use($app) {
   $average_rating = array();
 
   //for each product id
-  for ($product_ids as $row_key => $row) {
+  foreach ($product_ids as $row_key => $row) {
     $product_id = $row['product_id'];
     $reviews = $app['db']->fetchAll("SELECT rating, FROM reviews WHERE product_id = $product_id");
     $average_total = 0;
     //for each review for that product
-    for ($reviews as $review_row_key => $review_row) {
+    foreach ($reviews as $review_row_key => $review_row) {
       $review_rating = $review_row['rating'];
       $average_total+=$rating_rating;
     }
