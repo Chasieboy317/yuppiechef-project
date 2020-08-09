@@ -56,6 +56,7 @@ $app->post('/review', function() use($app) {
   //code for handling review submission here
   $app['db']->insert('reviews', array(
     'id' => md5(strtotime(date("Y-m-d h:i:sa")).rand(0, 999)),
+    'product_id' => ($_POST['product']),
     'timestamp' => strtotime(date("Y-m-d h:i:sa")),
     'description' => ($_POST['description']),
     'rating' => ($_POST['rating']),
@@ -88,7 +89,7 @@ $app->post('/edit_review', function() use($app) {
 });
 
 $app->get('/product/{id}', function($id) use($app) {
-  //$product = $app['db']->fetchAssoc('SELECT * FROM products WHERE id = ?', array("$id"));
+  //$product = $app['db']->fetchAssoc('SELECT name, href FROM products WHERE id = ?', array("$id"));
   $product = array(
     'id' => '1234',
     'name' => 'french press',
@@ -105,6 +106,36 @@ $app->get('/get_all_reviews', function() use($app) {
 
 $app->get('/view_all', function() use($app) {
   return $app['twig']->render('view_all.twig');
+});
+
+$app->get('/report', function() use($app) {
+  //average product rating
+  return $app['twig']->render('report.twig');
+});
+
+$app->get('/report/get_data', function() use($app) {
+  $product_ids = $app['db']->fetchAll('SELECT * FROM products');
+  $average_rating = array();
+
+  //for each product id
+  for ($product_ids as $row_key => $row) {
+    $product_id = $row['product_id'];
+    $reviews = $app['db']->fetchAll("SELECT rating, FROM reviews WHERE product_id = $product_id");
+    $average_total = 0;
+    //for each review for that product
+    for ($reviews as $review_row_key => $review_row) {
+      $review_rating = $review_row['rating'];
+      $average_total+=$rating_rating;
+    }
+    $average_rating[$product_id]=array(
+      'rating' => $average_total/count($reviews),
+      'name' => $row['name'],
+      'href' => $row['href'],
+      'total_reviews' => $average_total
+    );
+  }
+
+  return $app->json(json_encode($average_rating), 200);
 });
 
 $app->error(function(\Exception $e) {

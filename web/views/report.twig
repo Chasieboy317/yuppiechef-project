@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container">
+  <h1>Reports<h1>
+  <div class="card">
+    <div class="card-body">
+      <h3 class="card-title">Average reviews per product</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Product ID</th>
+            <th scope="col">Product name</th>
+            <th scope="col">Average rating</th>
+            <th scope="col">Total reviews</th>
+            <th scope="col">Link</th>
+          </tr>
+        </thead>
+        <tbody id="average_reviews">
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  function getReportData() {
+    fetch('/report/get_data').then(async result => {
+      return await result.json();
+    }).then(result => {
+      result = JSON.parse(result);
+
+      let averageReviewsTable = document.getElementById("average_reviews");
+
+      result.forEach(product => {
+        Object.keys(product).foreach(id => {
+          let tr = document.createElement("tr");
+          let productIdElem = document.createElement("td");
+          let productNameElem = document.createElement("td");
+          let productRatingElem = document.createElement("td");
+          let productHrefElem = document.createElement("td");
+          let productTotalElem = document.createElement("td");
+
+          productIdElem.innerText = id;
+          productNameElem.innerText = product[id]['name'];
+          productRatingElem.innerText = product[id]['rating'];
+          productHrefElem.innerText = product[id]['href'];
+          productTotalElem.innerText = product[id]['total_reviews'];
+
+          tr.appendChild(productIdElem);
+          tr.appendChild(productNameElem);
+          tr.appendChild(productRatingElem);
+          tr.appendChild(productTotalElem);
+          tr.appendChild(productHrefElem);
+
+          averageReviewsTable.appendChild(tr);
+        });
+      });
+    });
+  }
+
+  getReportData();
+</script>
+
+{% endblock %}
