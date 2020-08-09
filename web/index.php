@@ -81,7 +81,7 @@ $app->get('/get_review/{id}', function($id) use($app) {
   return $app->json(json_encode($review), 200);
 });
 
-$app->post('/edit_review/${id}', function($id) use($app) {
+$app->post('/edit_review', function($id) use($app) {
   $app['db']->update('reviews', array('description' => $_POST['description']), array('id' => $_POST['id']));
   return 'Successfully updated review';
 });
@@ -103,19 +103,6 @@ $app->get('/get_all_reviews', function() use($app) {
 });
 
 $app->get('/view_all', function() use($app) {
-  /*$statement = $app['db']->prepare('SELECT * FROM reviews');
-  $statement->execute();
-  $reviews = $statement->fetchAllAssociative();*/
-
-  /*foreach($reviews as $row_number => $row) {
-    $response.=$row_number."\t|";
-    foreach($row as $key => $value) {
-      $response.=$value."|";
-    }
-    $response.="<br />";
-  }*/
-  //get all reviews and put into list and return
-  //return "<div class=\"container\">$response</div>";
   return $app['twig']->render('view_all.twig');
 });
 
