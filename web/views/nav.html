@@ -19,7 +19,8 @@
 
 <script>
   function makeActive() {
-    document.getElementById(window.location.href.split('/').pop()).className="active";
+    console.log(window.location.href);
+    document.getElementById(window.location.href.split('/').pop()).parentNode.className="active";
   }
 
   makeActive();
