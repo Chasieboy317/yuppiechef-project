@@ -10,10 +10,6 @@ submit review page:
 popup response displaying success
 popup response displaying failure
 
-review page:
-editing review data and updating the database
-get product name from database using id
-
 reports page:
 average review rating per product
 number of reviews per product
@@ -23,16 +19,13 @@ time of day reviews are submitted
 user input:
 validate user input server side
 reject empty reviews
-error handling if reviews have the same timestamp
 
 mysql database:
 indexing
-review ids should be more unique - maybe change id to timestamp and md5 hash of date and random number
 add timestamp column in reviews table
-add link to product table
+add link column in product table
 
 mysql api:
-add timestamp value and hash id when inserting review
 selecting only necessary fields
 
 security:
