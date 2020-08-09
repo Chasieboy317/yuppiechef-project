@@ -54,7 +54,8 @@ $app->get('/review', function() use($app) {
 $app->post('/review', function() use($app) {
   //code for handling review submission here
   $app['db']->insert('reviews', array(
-    'id' => strtotime(date("Y-m-d h:i:sa")),
+    'id' => md5(strtotime(date("Y-m-d h:i:sa")).rand(0, 999)),
+    'timestamp' => strtotime(date("Y-m-d h:i:sa")),
     'description' => ($_POST['description']),
     'rating' => ($_POST['rating']),
     'href' => ($_POST['href']),

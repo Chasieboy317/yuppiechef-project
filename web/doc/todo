@@ -11,7 +11,6 @@ popup response displaying success
 popup response displaying failure
 
 review page:
-displaying review data on single Reviews
 editing review data and updating the database
 get product name from database using id
 
