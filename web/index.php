@@ -82,7 +82,7 @@ $app->get('/get_review/{id}', function($id) use($app) {
 });
 
 $app->post('/edit_review', function() use($app) {
-  $app['db']->update('reviews', array('description' => $_POST['description']));
+  $app['db']->update('reviews', array('description' => $_POST['description']), array('id' => $_POST['id']));
   return new Response('Successfully updated review', 200);
 });
 
