@@ -85,12 +85,7 @@ $app->post('/edit_review', function() use($app) {
 });
 
 $app->get('/product/{id}', function($id) use($app) {
-  //$product = $app['db']->fetchAssoc('SELECT name, href FROM products WHERE id = ?', array("$id"));
-  $product = array(
-    'id' => '1234',
-    'name' => 'french press',
-    'link' => '/products/'.$id
-  );
+  $product = $app['db']->fetchAssoc('SELECT name, href FROM products WHERE id = ?', array("$id"));
   return $app->json(json_encode($product), 200);
 });
 
@@ -105,7 +100,6 @@ $app->get('/view_all', function() use($app) {
 });
 
 $app->get('/report', function() use($app) {
-  //average product rating
   return $app['twig']->render('report.twig');
 });
 
@@ -116,7 +110,7 @@ $app->get('/report/get_data', function() use($app) {
   //for each product id
   foreach ($product_ids as $row_key => $row) {
     $product_id = $row['product_id'];
-    $reviews = $app['db']->fetchAll("SELECT rating, FROM reviews WHERE product_id = $product_id");
+    $reviews = $app['db']->fetchAll("SELECT rating FROM reviews WHERE product_id = $product_id");
     $average_total = 0;
     //for each review for that product
     foreach ($reviews as $review_row_key => $review_row) {
