@@ -2,7 +2,6 @@
 
 {% block content %}
 
-<div>{{global.request.get('id')}}</div>
 <div class="container">
   <h3 id="product_name"></h4>
   <h4 id="product_id"></h4>
@@ -29,10 +28,12 @@
       <input name="description" id="review_description" type="text">
     </div>
   <form>
-
 </div>
 
 <script>
+{
+
+}
   function getReview() {
     fetch(`/get_review/${ {{global.request.get('id')}} }`).then(async result => {
       return await result.json();
@@ -76,7 +77,9 @@
     document.getElementById("product_link").innerText=product.link;
   }
 
+  {% if global.request.get('id') is defined %}
   getReview();
+  {% endif %}
   getProduct();
 
 

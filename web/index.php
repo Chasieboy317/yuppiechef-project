@@ -77,7 +77,7 @@ $app->get('/view_review/{id}', function($id) use($app) {
 
 $app->get('/get_review/{id}', function($id) use($app) {
   $review = $app['db']->fetchAssoc('SELECT * FROM reviews WHERE id = ?', array("$id"));
-  return json(json_encode($review), 200);
+  return $app->json(json_encode($review), 200);
 });
 
 $app->post('/edit_review', function() use($app) {
@@ -92,7 +92,7 @@ $app->get('/product/{id}', function($id) use($app) {
     'name' => 'french press',
     'link' => '/products/'.$id
   );
-  return json(json_encode($product), 200);
+  return $app->json(json_encode($product), 200);
 });
 
 $app->get('/get_all_reviews', function() use($app) {
