@@ -29,25 +29,6 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-function validateReviewInput(product_id, description, rating, username, email): boolval {
-  if (strlen($product_id)!=6) {
-    return false;
-  }
-  if (strlen($description)==0) {
-    return false;
-  }
-  if (!($rating>=1 && $rating<=5)) {
-    return false;
-  }
-  if (strlen($username)==0) {
-    return false;
-  }
-  if (strlen($email)==0) {
-    return false;
-  }
-  return true;
-}
-
 // Our web handlers
 $app->get('/', function() use($app) {
   $app['monolog']->addDebug('logging output.');
@@ -75,7 +56,7 @@ $app->post('/review', function() use($app) {
   $product_id = $app->escape($_POST['product']);
   $description = $app->escape($_POST['description']);
   $rating = $app->escape($_POST['rating']);
-  $username = $app->escape($_POST['username']);
+  $username = $app->escape($_POST['name']);
   $email = $app->escape($_POST['email']);
 
   //get the link for the product that is being reviewed
@@ -88,7 +69,23 @@ $app->post('/review', function() use($app) {
 
 
   //testing for malformed input
-  $valid = validateReviewInput($_POST['product'], $_POST['description'], $_POST['rating'], $_POST['name'], $_POST['email']);
+  $valid = true;
+  if (strlen($product_id)!=6) {
+    $valid = false;
+  }
+  if (strlen($description)==0) {
+    $valid = false;
+  }
+  if (!($rating>=1 && $rating<=5)) {
+    $valid = false;
+  }
+  if (strlen($username)==0) {
+    $valid = false;
+  }
+  if (strlen($email)==0) {
+    $valid = false;
+  }
+
   if (!$valid) {
     throw new Exception('user input not valid');
   }
@@ -96,13 +93,13 @@ $app->post('/review', function() use($app) {
   //code for handling review submission here
   $app['db']->insert('reviews', array(
     'id' => md5(strtotime(date("Y-m-d h:i:sa")).rand(0, 999)),
-    'product_id' => $app->escape($_POST['product']),
+    'product_id' => $product_id,
     'timestamp' => strtotime(date("Y-m-d h:i:sa")),
-    'description' => $app->escape($_POST['description']),
-    'rating' => $app->escape($_POST['rating']),
+    'description' => $description,
+    'rating' => $rating,
     'href' => $app->escape($product['href']),
-    'username' => $app->escape($_POST['name']),
-    'email' => $app->escape($_POST['email']),
+    'username' => $username,
+    'email' => $email,
   ));
 
   //update product rating
