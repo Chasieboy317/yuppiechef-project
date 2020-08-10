@@ -43,7 +43,7 @@ $app->get('/review', function() use($app) {
 });
 
 $app->post('/review', function() use($app) {
-  $product = $app->fetchAssoc('SELECT href FROM products WHERE id = ?', array($_POST['product']));
+  $product = $app['db']->fetchAssoc('SELECT href FROM products WHERE id = ?', array($_POST['product']));
   //code for handling review submission here
   $app['db']->insert('reviews', array(
     'id' => md5(strtotime(date("Y-m-d h:i:sa")).rand(0, 999)),
