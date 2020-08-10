@@ -82,8 +82,9 @@ $app->get('/get_review/{id}', function($id) use($app) {
 });
 
 
-$app->post('/edit_review', function($id) use($app) {
-  $app['db']->update('reviews', array('description' => $app->escape($id)), array('id' => $id));
+$app->post('/edit_review', function() use($app) {
+  $id = escape($_POST['description']);
+  $app['db']->update('reviews', array('description' => $id), array('id' => $id));
   return $app->redirect("/view_review/$id");
 });
 
