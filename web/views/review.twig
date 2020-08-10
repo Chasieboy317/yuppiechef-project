@@ -42,6 +42,12 @@
   </form>
 </div>
 
+{% if showPopup is defined %}
+
+{{ include("success.twig") }}
+
+{% endif %}
+
 <script>
   async function getProducts() {
     fetch('/products').then(async result => {

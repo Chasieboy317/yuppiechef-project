@@ -68,7 +68,7 @@ $app->post('/review', function() use($app) {
 
   $app['db']->update('product_ratings', array('rating' => $new_rating, 'total' => $total+1), array('id' => $_POST['product']));
 
-  return $app['twig']->render('success.twig');
+  return $app['twig']->render('review.twig', ['showPopup' => true]);
 });
 
 
