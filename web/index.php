@@ -127,20 +127,20 @@ $app->get('/report/get_data', function() use($app) {
 
 //return the depending on the error
 $app->error(function (\Exception $e, Request $request, $code) use($app) {
-  /*switch ($code) {
+  switch ($code) {
     case 404:
       $message = $app['twig']->render('notfound.twig');
       break;
     default:
       $message = 'Sorry, but something went terribly wrong';
   }
-  return $message; */
-  if ($code==404) {
+  return $message;
+  /*if ($code==404) {
     return $app['twig']->render('notfound.twig');
   }
   else {
     return 'sorry something went wrong';
-  }
+  }*/
 });
 
 $app->run();
