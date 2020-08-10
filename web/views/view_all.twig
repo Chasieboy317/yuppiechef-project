@@ -12,6 +12,7 @@
         <th scope="col">Username</th>
         <th scope="col">Submitted at</th>
         <th scope="col">Description</th>
+        <th scope="col"></th>
       <tr>
     </thead>
     <tbody id="reviews">
@@ -48,7 +49,7 @@
     nameElem.innerText=review.username;
 
     let timestampElem = document.createElement("td");
-    timestampElem.innerText=review.timestamp;
+    timestampElem.innerText=new Date(review.timestamp).toGMTString();
 
     let descElem = document.createElement("td");
     descElem.innerText=review.description;
@@ -66,6 +67,7 @@
     row.appendChild(idElem);
     row.appendChild(ratingElem);
     row.appendChild(nameElem);
+    row.appendChild(timestampElem);
     row.appendChild(descElem);
     row.appendChild(editElem);
 
