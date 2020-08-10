@@ -55,8 +55,17 @@ $app->post('/review', function() use($app) {
     'username' => $app->escape($_POST['name']),
     'email' => $app->escape($_POST['email']),
   ));
-  //structure entry and put in database
-  //send the user a successful message back
+
+  //update product rating
+  $product_rating = $app['db']->fetchAssoc('SELECT rating, total FROM product_ratings WHERE id = ?', array($_POST['product']));
+  $rating = $product_rating['rating'];
+  $total = $product_rating['total'];
+  //calculate new average
+  $sum = $rating*$total;
+  $new_rating = ($sum+$app->escape($_POST['rating']))/($total+1);
+
+  $app['db']->update('product_ratings', array('rating' => $new_rating, 'total' => $total+1), array('id' => $_POST['product']));
+
   return "<script>alert(\"Thank you for your feedback!\")</script>";
 });
 
@@ -94,28 +103,8 @@ $app->get('/report', function() use($app) {
 });
 
 $app->get('/report/get_data', function() use($app) {
-  $product_ids = $app['db']->fetchAll('SELECT * FROM products');
-  $average_rating = array();
-
-  //for each product id
-  foreach ($product_ids as $row_key => $row) {
-    $product_id = $row['product_id'];
-    $reviews = $app['db']->fetchAll("SELECT rating FROM reviews WHERE product_id = $product_id");
-    $average_total = 0;
-    //for each review for that product
-    foreach ($reviews as $review_row_key => $review_row) {
-      $review_rating = $review_row['rating'];
-      $average_total+=$rating_rating;
-    }
-    $average_rating[$product_id]=array(
-      'rating' => $average_total/count($reviews),
-      'name' => $row['name'],
-      'href' => $row['href'],
-      'total_reviews' => $average_total
-    );
-  }
-
-  return $app->json(json_encode($average_rating), 200);
+  $product_data = $app['db']->fetchAll('SELECT product_ratings.id, product_ratings.rating, product_ratings.total, products.name, products.href FROM product_ratings INNER JOIN products on products.id=product_ratings.id');
+  return $app->json(json_encode($product_ratings), 200);
 });
 
 $app->error(function(\Exception $e) {

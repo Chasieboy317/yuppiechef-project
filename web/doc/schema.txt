@@ -1,2 +1,3 @@
 products(id, name);
 reviews(id, description, rating, href, username, email);
+product_ratings(id, average, total);

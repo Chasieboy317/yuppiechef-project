@@ -3,13 +3,12 @@ should display some disclaimer text
 indicate navbar above
 what each page does
 
-submit review page:
-popup response displaying success
-popup response displaying failure
+*******reports:
+optimization
+when product reviews gets submitted, update entry in product_rating table
 
-***reports page:
-total review activity per day
-time of day reviews are submitted
+submit review page:
+popup response displaying failure
 
 ***user input:
 validate user input server side
@@ -17,7 +16,6 @@ reject empty reviews
 
 *********mysql database:
 indexing
-
 
 http:
 error handling for invalid routes
