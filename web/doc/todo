@@ -1,15 +1,3 @@
-***homepage /:
-should display some disclaimer text
-indicate navbar above
-what each page does
-
-*********mysql database:
-indexing
-
-http:
-rate limiting
-
 FINAL:
 UNIT TESTING OF ALL FUNCTIONALITY
-ADD PRODUCT DATA IN DATABASE
 LEAVE A VIEW TEST REVIEWS TO SHOW BASIC FUNCTIONALITY
