@@ -4,7 +4,7 @@
 
 <div class="container">
   <h1>We'd like to hear back from you!</h1>
-  <form id="review_form" action="/review" method="post" target="popup_response">
+  <form id="review_form" action="/review" method="post" target="_top">
     <div class="form-group">
       <label>Full Name</label>
       <input type="name" name="name" class="form-control">
@@ -39,9 +39,6 @@
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </div>
-
-<iframe width="100vw" height="100vh" name="popup_reponse">
-</iframe>
 
 <script>
   async function getProducts() {

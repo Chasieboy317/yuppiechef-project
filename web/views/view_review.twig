@@ -37,7 +37,7 @@
 
 }
   function getReview() {
-    fetch(`/get_review/${ {{global.request.get('id')}} }`).then(async result => {
+    fetch(`/get_review/{{global.request.get('id')}}`).then(async result => {
       return await result.json();
     }).then(result => {
       result = JSON.parse(result);
