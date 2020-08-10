@@ -63,26 +63,25 @@ $app->post('/review', function() use($app) {
   $product = $app['db']->fetchAssoc('SELECT href FROM products WHERE id = ?', array($_POST['product']));
 
   //testing for non existent product
-  if (strlen($product['href'])==0) {
+  if (empty($product)) {
     throw new Exception('product not found');
   }
-
 
   //testing for malformed input
   $valid = true;
   if (strlen($product_id)!=6) {
     $valid = false;
   }
-  if (strlen($description)==0) {
+  else if (strlen($description)==0) {
     $valid = false;
   }
-  if (!($rating>=1 && $rating<=5)) {
+  else if (!($rating>=1 && $rating<=5)) {
     $valid = false;
   }
-  if (strlen($username)==0) {
+  else if (strlen($username)==0) {
     $valid = false;
   }
-  if (strlen($email)==0) {
+  else if (strlen($email)==0) {
     $valid = false;
   }
 
@@ -103,7 +102,7 @@ $app->post('/review', function() use($app) {
   ));
 
   //update product rating
-  $product_rating = $app['db']->fetchAssoc('SELECT rating, total FROM product_ratings WHERE id = ?', array($_POST['product']));
+  $product_rating = $app['db']->fetchAssoc('SELECT rating, total FROM product_ratings WHERE id = ?', array($product_id));
   $rating = $product_rating['rating'];
   $total = $product_rating['total'];
 
@@ -111,7 +110,7 @@ $app->post('/review', function() use($app) {
   $sum = $rating*$total;
   $new_rating = ($sum+$app->escape($_POST['rating']))/($total+1);
 
-  $app['db']->update('product_ratings', array('rating' => $new_rating, 'total' => $total+1), array('id' => $_POST['product']));
+  $app['db']->update('product_ratings', array('rating' => $new_rating, 'total' => $total+1), array('id' => $product_id));
 
   return $app['twig']->render('review.twig', ['showPopup' => true]);
 });
@@ -125,6 +124,9 @@ $app->get('/view_review/{id}', function($id) use($app) {
 //api call for retrieving all data for a particular review
 $app->get('/get_review/{id}', function($id) use($app) {
   $review = $app['db']->fetchAssoc('SELECT * FROM reviews WHERE id = ?', array("$id"));
+  if (empty($review)) {
+    throw new Exception "review with $id does not exist";
+  }
   return $app->json(json_encode($review), 200);
 });
 
@@ -133,7 +135,7 @@ $app->post('/edit_review', function() use($app) {
   //test for non existent review
   $id = $app->escape($_POST['id']);
   $review = $app['db']->fetchAssoc('SELECT id FROM reviews WHERE id = ?', array("$id"));
-  if ($review['id']!=$id) {
+  if (empty($review)) {
     throw new Exception('review does not exist');
   }
 
@@ -150,8 +152,9 @@ $app->post('/edit_review', function() use($app) {
 //api call for getting all data for a particular product
 $app->get('/product/{id}', function($id) use($app) {
   $product = $app['db']->fetchAssoc('SELECT name, href FROM products WHERE id = ?', array("$id"));
-  $app['monolog']->addDebug($product);
-  $app['monolog']->addDebug(empty($product));
+  if (empty($product)) {
+    throw new Exception("product with $id does not exist");
+  }
   return $app->json(json_encode($product), 200);
 });
 
