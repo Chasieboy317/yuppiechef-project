@@ -143,7 +143,7 @@ $app->post('/edit_review', function() use($app) {
     throw new Exception('description cannot be empty');
   }
 
-  $app['db']->update('reviews', array('description' => $description, array('id' => $id));
+  $app['db']->update('reviews', array('description' => $description), array('id' => $id));
   return $app->redirect("/view_review/$id");
 });
 
