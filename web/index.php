@@ -26,8 +26,10 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
   ),
 ));
 
-// Our web handlers
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
+// Our web handlers
 $app->get('/', function() use($app) {
   $app['monolog']->addDebug('logging output.');
   return $app['twig']->render('index.twig');
@@ -79,9 +81,10 @@ $app->get('/get_review/{id}', function($id) use($app) {
   return $app->json(json_encode($review), 200);
 });
 
-$app->post('/edit_review', function() use($app) {
+
+$app->post('/edit_review', function(Request $request) use($app) {
   $app['db']->update('reviews', array('description' => $app->escape($_POST['description'])), array('id' => $_POST['id']));
-  return "<script>alert(\"Review successfully updated\")</script>";
+  return $app->redirect($request->getReferer());
 });
 
 $app->get('/product/{id}', function($id) use($app) {
