@@ -49,7 +49,7 @@
     nameElem.innerText=review.username;
 
     let timestampElem = document.createElement("td");
-    timestampElem.innerText=new Date(review.timestamp).toGMTString();
+    timestampElem.innerText=new Date(review.timestamp*1000).toGMTString();
 
     let descElem = document.createElement("td");
     descElem.innerText=review.description;
