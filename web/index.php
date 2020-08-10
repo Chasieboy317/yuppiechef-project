@@ -35,15 +35,22 @@ $app->get('/', function() use($app) {
   return $app['twig']->render('index.twig');
 });
 
+//fetch all the products from the database and send them back json encoded
 $app->get('/products', function() use($app) {
   $products=$app['db']->fetchAll('SELECT * FROM products');
   return $app->json(json_encode($products), 200);
 });
 
+//render the submit review page
 $app->get('/review', function() use($app) {
   return $app['twig']->render('review.twig');
 });
 
+//when a user submits the review, fetch the product data for which the review was submitted
+//the review id is md5 hashed using the current date and time and a random appended number from 0-999
+//all user input data to be stored in the database is html character escaped
+//the ratings for the reviewed product is recalculated and updated
+//the review page is returned with the popup flag set.
 $app->post('/review', function() use($app) {
   $product = $app['db']->fetchAssoc('SELECT href FROM products WHERE id = ?', array($_POST['product']));
   //code for handling review submission here
@@ -72,47 +79,61 @@ $app->post('/review', function() use($app) {
 });
 
 
+//render the review page
 $app->get('/view_review/{id}', function($id) use($app) {
   return $app['twig']->render('view_review.twig');
 });
 
+//api call for retrieving all data for a particular review
 $app->get('/get_review/{id}', function($id) use($app) {
   $review = $app['db']->fetchAssoc('SELECT * FROM reviews WHERE id = ?', array("$id"));
   return $app->json(json_encode($review), 200);
 });
 
-
+//escape the user input and update the description in the database
 $app->post('/edit_review', function() use($app) {
   $id = $app->escape($_POST['id']);
   $app['db']->update('reviews', array('description' => $app->escape($_POST['description'])), array('id' => $id));
   return $app->redirect("/view_review/$id");
 });
 
+//api call for getting all data for a particular product
 $app->get('/product/{id}', function($id) use($app) {
   $product = $app['db']->fetchAssoc('SELECT name, href FROM products WHERE id = ?', array("$id"));
   return $app->json(json_encode($product), 200);
 });
 
+//api call for getting all information for every review
 $app->get('/get_all_reviews', function() use($app) {
   $reviews = $app['db']->fetchAll('SELECT * FROM reviews');
   return $app->json(json_encode($reviews), 200);
 });
 
+//render the review listing page
 $app->get('/view_all', function() use($app) {
   return $app['twig']->render('view_all.twig');
 });
 
+//render the reports page
 $app->get('/report', function() use($app) {
   return $app['twig']->render('report.twig');
 });
 
+//return all the information the database has for the products, including the product ratings
 $app->get('/report/get_data', function() use($app) {
   $product_data = $app['db']->fetchAll('SELECT product_ratings.id, product_ratings.rating, product_ratings.total, products.name, products.href FROM product_ratings INNER JOIN products on products.id=product_ratings.id');
   return $app->json(json_encode($product_data), 200);
 });
 
-$app->error(function(\Exception $e) {
-  return ("Sorry, but something went terrible wrong<br />$e");
+//return the depending on the error
+$app->error(function (\Exception $e, Request $request, $code) {
+  switch ($code) {
+    case 404:
+      return $app['twig']->render('notfound.twig');
+      break;
+    default:
+      return 'Sorry, but something went terribly wrong';
+  }
 });
 
 $app->run();
