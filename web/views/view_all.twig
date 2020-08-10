@@ -53,17 +53,21 @@
     let descElem = document.createElement("td");
     descElem.innerText=review.description;
 
+    editElem = document.createElement("td")
+
     editButton = document.createElement("a");
     editButton.className="btn btn-primary btn-sm";
     editButton.innerText="Edit review";
     editButton.href=`/view_review/${review.id}`;
+
+    editElem.appendChild(editButton);
 
     let row = document.createElement("tr");
     row.appendChild(idElem);
     row.appendChild(ratingElem);
     row.appendChild(nameElem);
     row.appendChild(descElem);
-    row.appendChild(editButton);
+    row.appendChild(editElem);
 
     return row;
   }

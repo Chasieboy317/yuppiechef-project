@@ -26,7 +26,6 @@
       return await result.json();
     }).then(result => {
       result = JSON.parse(result);
-      console.log(result);
 
       let averageReviewsTable = document.getElementById("average_reviews");
 
@@ -38,10 +37,15 @@
         let productHrefElem = document.createElement("td");
         let productTotalElem = document.createElement("td");
 
+        let productHrefA = document.createElement("a");
+        productHrefA.href = product.href;
+        productHrefA.innerText = product.href;
+
+        productHrefElem.appendChild(productHrefA);
+
         productIdElem.innerText = product.id;
         productNameElem.innerText = product.name;
         productRatingElem.innerText = product.rating;
-        productHrefElem.innerText = product.href;
         productTotalElem.innerText = product.total;
 
         tr.appendChild(productIdElem);
