@@ -29,6 +29,25 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+function validateReviewInput(product_id, description, rating, username, email): boolval {
+  if (strlen($product_id)!=6) {
+    return false;
+  }
+  if (strlen($description)==0) {
+    return false;
+  }
+  if (!($rating>=1 && $rating<=5)) {
+    return false;
+  }
+  if (strlen($username)==0) {
+    return false;
+  }
+  if (strlen($email)==0) {
+    return false;
+  }
+  return true;
+}
+
 // Our web handlers
 $app->get('/', function() use($app) {
   $app['monolog']->addDebug('logging output.');
@@ -52,7 +71,28 @@ $app->get('/review', function() use($app) {
 //the ratings for the reviewed product is recalculated and updated
 //the review page is returned with the popup flag set.
 $app->post('/review', function() use($app) {
+  //html escape all user input
+  $product_id = $app->escape($_POST['product']);
+  $description = $app->escape($_POST['description']);
+  $rating = $app->escape($_POST['rating']);
+  $username = $app->escape($_POST['username']);
+  $email = $app->escape($_POST['email']);
+
+  //get the link for the product that is being reviewed
   $product = $app['db']->fetchAssoc('SELECT href FROM products WHERE id = ?', array($_POST['product']));
+
+  //testing for non existent product
+  if (strlen($product['href'])==0) {
+    throw new Exception('product not found');
+  }
+
+
+  //testing for malformed input
+  $valid = validateReviewInput($_POST['product'], $_POST['description'], $_POST['rating'], $_POST['name'], $_POST['email']);
+  if (!$valid) {
+    throw new Exception('user input not valid');
+  }
+
   //code for handling review submission here
   $app['db']->insert('reviews', array(
     'id' => md5(strtotime(date("Y-m-d h:i:sa")).rand(0, 999)),
@@ -69,6 +109,7 @@ $app->post('/review', function() use($app) {
   $product_rating = $app['db']->fetchAssoc('SELECT rating, total FROM product_ratings WHERE id = ?', array($_POST['product']));
   $rating = $product_rating['rating'];
   $total = $product_rating['total'];
+
   //calculate new average
   $sum = $rating*$total;
   $new_rating = ($sum+$app->escape($_POST['rating']))/($total+1);
@@ -92,14 +133,28 @@ $app->get('/get_review/{id}', function($id) use($app) {
 
 //escape the user input and update the description in the database
 $app->post('/edit_review', function() use($app) {
+  //test for non existent review
   $id = $app->escape($_POST['id']);
-  $app['db']->update('reviews', array('description' => $app->escape($_POST['description'])), array('id' => $id));
+  $review = $app['db']->fetchAssoc('SELECT id FROM reviews WHERE id = ?', array("$id"));
+  if ($review['id']!=$id) {
+    throw new Exception('review does not exist');
+  }
+
+  //test for empty description
+  $description = $app->escape($_POST['description']);
+  if (strlen($description)==0) {
+    throw new Exception('description cannot be empty');
+  }
+
+  $app['db']->update('reviews', array('description' => $description, array('id' => $id));
   return $app->redirect("/view_review/$id");
 });
 
 //api call for getting all data for a particular product
 $app->get('/product/{id}', function($id) use($app) {
   $product = $app['db']->fetchAssoc('SELECT name, href FROM products WHERE id = ?', array("$id"));
+  $app['monolog']->addDebug($product);
+  $app['monolog']->addDebug(empty($product));
   return $app->json(json_encode($product), 200);
 });
 
@@ -132,7 +187,7 @@ $app->error(function (\Exception $e, Request $request, $code) use($app) {
       $message = $app['twig']->render('notfound.twig');
       break;
     default:
-      $message = 'Sorry, but something went terribly wrong';
+      $message = "Sorry, but something went terribly wrong <br />$e";
   }
   return $message;
 });
