@@ -1,6 +1,6 @@
 {% block content %}
 
-<div class="modal fade">
+<div class="modal fade" id="success_popup">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -19,4 +19,9 @@
   </div>
 </div>
 
+<script>
+  $(document).ready(function() {
+    $('#success_popup').modal('show');
+  });
+</script>
 {% endblock %}
