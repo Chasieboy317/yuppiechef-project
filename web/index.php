@@ -126,7 +126,7 @@ $app->get('/report/get_data', function() use($app) {
 });
 
 //return the depending on the error
-$app->error(function (\Exception $e, Request $request, $code) {
+$app->error(function (\Exception $e, Request $request, $code) use($app) {
   /*switch ($code) {
     case 404:
       $message = $app['twig']->render('notfound.twig');
