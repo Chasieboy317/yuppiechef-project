@@ -14,11 +14,14 @@
       <input type="email" name="email" class="form-control">
     </div>
     <div class="form-group">
-      <div class="input-group-prepend">
-        <label class="input-group-text" for="ddMenu">Product</label>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="ddMenu">Product</label>
+        </div>
+        <select name="product" class="custom-select" id="ddMenu" required>
+          <option selected>Choose...</option>
+        </select>
       </div>
-      <select name="product" class="custom-select" id="ddMenu" required>
-      </select>
     </div>
     <div class="form-group">
       <label>Rating</label>
@@ -50,7 +53,8 @@
       let ddMenu = document.getElementById('ddMenu');
       result.forEach(product => {
         let item = document.createElement('option');
-        item.value = product.name;
+        item.value = product.id;
+        item.innerText = product.name;
         ddMenu.appendChild(item);
       });
     });
