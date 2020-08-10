@@ -3,24 +3,10 @@ should display some disclaimer text
 indicate navbar above
 what each page does
 
-*******reports:
-optimization
-when product reviews gets submitted, update entry in product_rating table
-
-submit review page:
-popup response displaying failure
-
-***user input:
-validate user input server side
-reject empty reviews
-
 *********mysql database:
 indexing
 
 http:
-error handling for invalid routes
-error handling for timeout requests
-error handling for api calls
 rate limiting
 
 FINAL:

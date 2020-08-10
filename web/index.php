@@ -125,7 +125,7 @@ $app->get('/view_review/{id}', function($id) use($app) {
 $app->get('/get_review/{id}', function($id) use($app) {
   $review = $app['db']->fetchAssoc('SELECT * FROM reviews WHERE id = ?', array("$id"));
   if (empty($review)) {
-    throw new Exception "review with $id does not exist";
+    throw new Exception("review with $id does not exist");
   }
   return $app->json(json_encode($review), 200);
 });
