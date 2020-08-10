@@ -135,7 +135,7 @@ $app->error(function (\Exception $e, Request $request, $code) use($app) {
       $message = 'Sorry, but something went terribly wrong';
   }
   return $message; */
-  return 'oops';
+  return $app['twig']->('notfound.twig');
 });
 
 $app->run();
