@@ -146,7 +146,7 @@ $app->post('/edit_review', function() use($app) {
   }
 
   $app['db']->update('reviews', array('description' => $description), array('id' => $id));
-  return $app->redirect("/view_review/$id");
+  return $app->redirect("/view_all");
 });
 
 //api call for getting all data for a particular product
