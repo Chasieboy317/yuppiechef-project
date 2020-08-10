@@ -14,12 +14,11 @@
       <input type="email" name="email" class="form-control">
     </div>
     <div class="form-group">
-      <div class="dropdown">
-        <input name="dropdownButton" class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" value="Select a product">
-        <input name="product" type="hidden" value="none" id="product">
-        <ul class="dropdown-menu" id="ddMenu">
-        </ul>
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="ddMenu">Product</label>
       </div>
+      <select name="product" class="custom-select" id="ddMenu" required>
+      </select>
     </div>
     <div class="form-group">
       <label>Rating</label>
@@ -49,19 +48,11 @@
 
       //add products to dropdown menu
       let ddMenu = document.getElementById('ddMenu');
-      for (let i=0; i<result.length; i++) {
-        let item = document.createElement('a');
-        let wrapper = document.createElement('li');
-        item.className="dropdown-item";
-        item.innerText=result[i].name;
-        item.href="#";
-        item.addEventListener("click", () => {
-          document.getElementById("product").value=result[i].id;
-          document.getElementById("dropdownMenuButton").value=result[i].name;
-        });
-        wrapper.appendChild(item);
-        ddMenu.appendChild(wrapper);
-      }
+      result.forEach(product => {
+        let item = document.createElement('option');
+        item.value = product.name;
+        ddMenu.appendChild(item);
+      });
     });
   }
 
