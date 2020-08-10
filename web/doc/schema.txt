@@ -1,3 +1,3 @@
-products(id, name);
+products(id, name, href);
 reviews(id, description, rating, href, username, email);
-product_ratings(id, average, total);
+product_ratings(id, rating, total);

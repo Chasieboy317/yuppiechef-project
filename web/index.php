@@ -104,7 +104,7 @@ $app->get('/report', function() use($app) {
 
 $app->get('/report/get_data', function() use($app) {
   $product_data = $app['db']->fetchAll('SELECT product_ratings.id, product_ratings.rating, product_ratings.total, products.name, products.href FROM product_ratings INNER JOIN products on products.id=product_ratings.id');
-  return $app->json(json_encode($product_ratings), 200);
+  return $app->json(json_encode($product_data), 200);
 });
 
 $app->error(function(\Exception $e) {
