@@ -84,7 +84,7 @@ $app->get('/get_review/{id}', function($id) use($app) {
 
 $app->post('/edit_review', function(Request $request) use($app) {
   $app['db']->update('reviews', array('description' => $app->escape($_POST['description'])), array('id' => $_POST['id']));
-  return $app->redirect($request->getReferer());
+  return $app->redirect($request->getUri());
 });
 
 $app->get('/product/{id}', function($id) use($app) {
