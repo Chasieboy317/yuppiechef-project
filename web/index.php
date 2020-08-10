@@ -150,7 +150,7 @@ $app->post('/edit_review', function() use($app) {
 });
 
 //api call for getting all data for a particular product
-$app->get('/product/{id}', function($id) use($app) {
+$app->get('/products/{id}', function($id) use($app) {
   $product = $app['db']->fetchAssoc('SELECT name, href FROM products WHERE id = ?', array("$id"));
   if (empty($product)) {
     throw new Exception("product with $id does not exist");

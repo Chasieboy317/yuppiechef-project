@@ -47,7 +47,7 @@
   }
 
   function getProduct(productId) {
-    fetch(`/product/${productId}`).then(async result => {
+    fetch(`/products/${productId}`).then(async result => {
       return await result.json();
     }).then(result => {
       result = JSON.parse(result);
