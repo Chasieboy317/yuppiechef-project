@@ -66,7 +66,7 @@ $app->post('/review', function() use($app) {
 
   $app['db']->update('product_ratings', array('rating' => $new_rating, 'total' => $total+1), array('id' => $_POST['product']));
 
-  return "<script>alert(\"Thank you for your feedback!\")</script>";
+  return $app['twig']->render('success.twig');
 });
 
 
@@ -81,7 +81,7 @@ $app->get('/get_review/{id}', function($id) use($app) {
 
 $app->post('/edit_review', function() use($app) {
   $app['db']->update('reviews', array('description' => $app->escape($_POST['description'])), array('id' => $_POST['id']));
-  return "<script>alert(\"Review successfully updated\")";
+  return "<script>alert(\"Review successfully updated\")</script>";
 });
 
 $app->get('/product/{id}', function($id) use($app) {
