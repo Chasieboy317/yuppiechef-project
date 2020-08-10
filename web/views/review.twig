@@ -7,11 +7,11 @@
   <form id="review_form" action="/review" method="post" target="_top">
     <div class="form-group">
       <label>Full Name</label>
-      <input type="name" name="name" class="form-control">
+      <input type="name" name="name" class="form-control" required>
     </div>
     <div class="form-group">
       <label>Email address</label>
-      <input type="email" name="email" class="form-control">
+      <input type="email" name="email" class="form-control" required>
     </div>
     <div class="form-group">
       <div class="input-group mb-3">
@@ -19,7 +19,7 @@
           <label class="input-group-text" for="ddMenu">Product</label>
         </div>
         <select name="product" class="custom-select" id="ddMenu" required>
-          <option selected value="">Choose...</option>
+          <option value="">None</option>
         </select>
       </div>
     </div>
@@ -36,7 +36,7 @@
     </div>
     <div class="form-group">
       <label>Description</label>
-      <textarea name="description" class="form-control" id="review_textarea" rows="4"></textarea>
+      <textarea name="description" class="form-control" id="review_textarea" rows="4" required></textarea>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
